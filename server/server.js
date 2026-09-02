@@ -61,13 +61,25 @@ app.use((err, req, res, next) => {
 // Start Server & Initialize Database
 const start = async () => {
   await initDB();
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`=============================================`);
     console.log(`🚀 Planio Backend running on http://localhost:${PORT}`);
     console.log(`📡 Healthcheck: http://localhost:${PORT}/api/health`);
     console.log(`🗄️  Database: ${isPgConnected ? 'PostgreSQL' : 'Local Persistent Store'}`);
     console.log(`=============================================`);
   });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`\n⚠️  Port ${PORT} is already in use by another running server instance.`);
+      console.error(`   To free port ${PORT} on Windows PowerShell, run:`);
+      console.error(`   Get-Process -Id (Get-NetTCPConnection -LocalPort ${PORT}).OwningProcess | Stop-Process -Force\n`);
+      process.exit(1);
+    } else {
+      console.error('Server error:', err);
+    }
+  });
 };
 
 start();
+

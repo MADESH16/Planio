@@ -495,3 +495,51 @@
   line-height: 1.4;
 }
 
+/* Task Page Commits Section */
+.task-page-commits-container {
+  background: var(--bg-app);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-commits-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.page-commits-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+.page-commits-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.btn-copy-git-cmd {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-copy-git-cmd:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+

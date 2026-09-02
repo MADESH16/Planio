@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTasks } from '../context/TaskContext';
+import { useAuth } from '../context/AuthContext';
 import {
   PlusIcon,
   GithubIcon,
   ExternalLinkIcon,
   CheckIcon,
+  GitForkIcon,
 } from './Icons';
 import './TaskPage.css';
 
@@ -22,10 +24,14 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
     addTask,
     updateTask,
     deleteTask,
+    addCommitToTask,
     users,
     linkedRepo,
     setIsGitHubModalOpen,
+    showToast,
   } = useTasks();
+
+  const { user } = useAuth();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -44,8 +50,17 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
   const [githubIssueUrl, setGithubIssueUrl] = useState('');
   const [selectedLabels, setSelectedLabels] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copiedKey, setCopiedKey] = useState(false);
+
+  // Direct Commit Adding on Edit Page
+  const [isAddingCommit, setIsAddingCommit] = useState(false);
+  const [commitHashInput, setCommitHashInput] = useState('');
+  const [commitMsgInput, setCommitMsgInput] = useState('');
+  const [commitBranchInput, setCommitBranchInput] = useState('main');
 
   const fileInputRef = useRef(null);
+  const currentTicketKey = taskToEdit?.ticketKey || 'PLN-105';
+  const commits = taskToEdit?.commits || [];
 
   useEffect(() => {
     if (taskToEdit) {
@@ -63,6 +78,7 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
       setGithubIssueUrl(taskToEdit.githubIssueUrl || '');
       setSelectedLabels(taskToEdit.githubLabels?.map((l) => (typeof l === 'string' ? l : l.name)) || []);
       setCreateOnGitHub(false);
+      setCommitMsgInput(`${taskToEdit.ticketKey || 'PLN-105'}: `);
     } else {
       setTitle('');
       setDescription('');
@@ -77,6 +93,7 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
       setGithubIssueUrl('');
       setSelectedLabels(['enhancement']);
       setCreateOnGitHub(Boolean(linkedRepo));
+      setCommitMsgInput('PLN-105: ');
       // Default formatted date
       const now = new Date();
       setDate(
@@ -126,6 +143,44 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
     );
   };
 
+  const handleCopyKey = () => {
+    navigator.clipboard.writeText(currentTicketKey);
+    setCopiedKey(true);
+    showToast(`Copied ticket key ${currentTicketKey}!`, 'info');
+    setTimeout(() => setCopiedKey(false), 2000);
+  };
+
+  const handleCopyGitCommand = () => {
+    const cmd = `git commit -m "${currentTicketKey}: your message" && git push origin main`;
+    navigator.clipboard.writeText(cmd);
+    showToast(`Copied Git command to clipboard!`, 'info');
+  };
+
+  const handleAttachCommit = async (e) => {
+    e.preventDefault();
+    if (!commitMsgInput.trim()) return;
+
+    const hash = commitHashInput.trim() || Math.random().toString(16).substring(2, 9);
+    const commitUrl = taskToEdit?.githubRepo ? `https://github.com/${taskToEdit.githubRepo}/commit/${hash}` : null;
+
+    const res = await addCommitToTask(taskToEdit ? taskToEdit.id : Date.now(), {
+      ticketKey: currentTicketKey,
+      commitHash: hash,
+      commitMessage: commitMsgInput.trim(),
+      authorName: user ? user.name : 'MADESH16',
+      authorEmail: user ? user.email : 'dev@planio.dev',
+      branch: commitBranchInput,
+      commitUrl,
+    });
+
+    if (res.success) {
+      setCommitHashInput('');
+      setCommitMsgInput(`${currentTicketKey}: `);
+      setIsAddingCommit(false);
+      showToast(`Attached commit #${hash.slice(0, 7)} to ${currentTicketKey}!`, 'success');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title.trim()) return;
@@ -144,7 +199,7 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
       image,
       date,
       creatorId: taskToEdit ? taskToEdit.creatorId : 'u1',
-      // GitHub properties
+      ticketKey: taskToEdit ? taskToEdit.ticketKey : undefined,
       createOnGitHub: !taskToEdit && createOnGitHub && integration === 'github',
       githubRepo: integration === 'github' ? (taskToEdit?.githubRepo || (linkedRepo ? linkedRepo.fullName : null)) : null,
       githubIssueNumber: githubIssueNumber ? Number(githubIssueNumber) : undefined,
@@ -156,7 +211,7 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
     };
 
     if (taskToEdit) {
-      updateTask(taskToEdit.id, taskData);
+      await updateTask(taskToEdit.id, taskData);
     } else {
       await addTask(taskData);
     }
@@ -176,12 +231,25 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
 
   return (
     <div className="task-page-container">
-      {/* Page Header (Toolbar actions embedded) */}
+      {/* Page Header */}
       <div className="task-page-header">
         <div className="task-page-header-left">
           <button type="button" className="btn-back" onClick={onCancel}>
             &larr; Back
           </button>
+
+          {/* Ticket Key Badge with 1-click copy */}
+          {taskToEdit && (
+            <div
+              className="task-modal-ticket-pill"
+              onClick={handleCopyKey}
+              title="Click to copy ticket key"
+            >
+              <span className="task-modal-ticket-key">{currentTicketKey}</span>
+              <span className="task-modal-copy-icon">{copiedKey ? '✓' : '⧉'}</span>
+            </div>
+          )}
+
           <h2 className="task-page-title">
             {taskToEdit ? 'Edit Task details' : 'Create Task'}
           </h2>
@@ -216,7 +284,7 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
 
       {/* Modern Two-column Split Layout Grid */}
       <div className="task-editor-layout">
-        {/* Left main panel: Content */}
+        {/* Left main panel: Content & Commits */}
         <div className="editor-main-panel">
           {/* Title */}
           <div className="form-group">
@@ -237,14 +305,14 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
             <label className="form-label">Task Description</label>
             <textarea
               className="form-input"
-              style={{ minHeight: '180px', resize: 'vertical', lineHeight: '1.6' }}
+              style={{ minHeight: '140px', resize: 'vertical', lineHeight: '1.6' }}
               placeholder="Write detailed notes, acceptance criteria, or deliverables..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 
-          {/* GitHub Integration Box (when integration === 'github') */}
+          {/* GitHub Integration Box */}
           {integration === 'github' && (
             <div className="task-gh-integration-box fade-in">
               <div className="task-gh-box-header">
@@ -333,6 +401,124 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
               ) : (
                 <div className="task-gh-no-repo">
                   <p>No repository linked yet. Connect a GitHub repository to sync tasks with GitHub issues.</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* LINKED GIT COMMITS SECTION */}
+          {taskToEdit && (
+            <div className="task-page-commits-container fade-in">
+              <div className="page-commits-header">
+                <div className="page-commits-title-box">
+                  <GitForkIcon size={18} />
+                  <h4 className="page-commits-title">
+                    Linked Git Commits for {currentTicketKey} ({commits.length})
+                  </h4>
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    type="button"
+                    className="btn-copy-git-cmd"
+                    onClick={handleCopyGitCommand}
+                    title="Copy git commit command"
+                  >
+                    <span>Copy Git Command</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-add-commit-toggle"
+                    onClick={() => setIsAddingCommit(!isAddingCommit)}
+                  >
+                    <PlusIcon size={14} />
+                    <span>{isAddingCommit ? 'Cancel' : 'Attach Commit'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Add / Push Commit Form */}
+              {isAddingCommit && (
+                <form onSubmit={handleAttachCommit} className="add-commit-form fade-in" style={{ marginTop: '12px' }}>
+                  <div className="commit-form-row">
+                    <div className="commit-form-group">
+                      <label className="commit-label">Commit Hash (SHA)</label>
+                      <input
+                        type="text"
+                        className="commit-input"
+                        placeholder="e.g. 7a9c4b2 (or leave blank to auto-generate)"
+                        value={commitHashInput}
+                        onChange={(e) => setCommitHashInput(e.target.value)}
+                      />
+                    </div>
+                    <div className="commit-form-group" style={{ maxWidth: '140px' }}>
+                      <label className="commit-label">Branch</label>
+                      <input
+                        type="text"
+                        className="commit-input"
+                        value={commitBranchInput}
+                        onChange={(e) => setCommitBranchInput(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="commit-form-group">
+                    <label className="commit-label">Commit Message</label>
+                    <input
+                      type="text"
+                      className="commit-input"
+                      placeholder={`e.g. ${currentTicketKey}: Add user authentication`}
+                      value={commitMsgInput}
+                      onChange={(e) => setCommitMsgInput(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="commit-form-actions">
+                    <button type="submit" className="btn-commit-submit">
+                      Attach Commit to {currentTicketKey}
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* Commits List */}
+              {commits.length === 0 ? (
+                <div className="commits-empty-state" style={{ marginTop: '12px' }}>
+                  <p>No commits linked to <strong>{currentTicketKey}</strong> yet.</p>
+                  <span className="commits-hint">
+                    Push a commit containing <code>{currentTicketKey}</code> in the message (e.g. <code>git commit -m "{currentTicketKey}: your message"</code>) or click <strong>Attach Commit</strong> above!
+                  </span>
+                </div>
+              ) : (
+                <div className="commits-list" style={{ marginTop: '12px' }}>
+                  {commits.map((commit, idx) => (
+                    <div key={commit.id || idx} className="commit-card fade-in">
+                      <div className="commit-card-left">
+                        <div className="commit-hash-badge">
+                          <code>{commit.commit_hash || commit.commitHash}</code>
+                        </div>
+                        <div className="commit-details">
+                          <span className="commit-msg">{commit.commit_message || commit.commitMessage}</span>
+                          <div className="commit-meta">
+                            <span className="commit-author">👤 {commit.author_name || commit.authorName}</span>
+                            <span className="commit-branch">🌿 {commit.branch || 'main'}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {(commit.commit_url || commit.commitUrl) && (
+                        <a
+                          href={commit.commit_url || commit.commitUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="commit-link-external"
+                          title="View commit on GitHub"
+                        >
+                          <ExternalLinkIcon size={14} />
+                        </a>
+                      )}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -477,23 +663,23 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
           <div className="form-group">
             <label className="form-label">Assignee Team Members</label>
             <div className="assignees-list-grid">
-              {users.map((user) => (
-                <label key={user.id} className="assignee-checkbox-label">
+              {users.map((u) => (
+                <label key={u.id} className="assignee-checkbox-label">
                   <input
                     type="checkbox"
-                    checked={assignees.includes(user.id)}
-                    onChange={() => handleAssigneeChange(user.id)}
+                    checked={assignees.includes(String(u.id)) || assignees.includes(u.id)}
+                    onChange={() => handleAssigneeChange(String(u.id))}
                   />
                   <span
                     style={{
                       width: '10px',
                       height: '10px',
                       borderRadius: '50%',
-                      backgroundColor: user.color,
+                      backgroundColor: u.color,
                       display: 'inline-block',
                     }}
                   />
-                  <span>{user.name}</span>
+                  <span>{u.name}</span>
                 </label>
               ))}
             </div>

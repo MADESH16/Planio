@@ -47,7 +47,8 @@
       "image_url": null,
       "creator_id": "u1",
       "assignees": [
-        "u1"
+        "u1",
+        2
       ],
       "github_repo": "MADESH16/Planio",
       "github_issue_number": 487,
@@ -59,7 +60,7 @@
         }
       ],
       "created_at": "2026-09-02T09:46:04.774Z",
-      "updated_at": "2026-09-02T09:46:50.271Z",
+      "updated_at": "2026-09-02T09:57:50.335Z",
       "estimatedTime": "",
       "image": null,
       "date": "09/02, 03:15 PM",
@@ -70,7 +71,11 @@
           "name": "enhancement",
           "color": "#3b82f6"
         }
-      ]
+      ],
+      "creatorId": "u1",
+      "githubIssueNumber": 487,
+      "githubIssueUrl": "https://github.com/MADESH16/Planio/issues/487",
+      "ticketKey": "PLN-105"
     },
     {
       "id": 1,
@@ -242,6 +247,18 @@
       "commit_url": "https://github.com/MADESH16/Planio/commit/e3f1b8a",
       "branch": "main",
       "created_at": "2026-09-02T09:48:58.502Z"
+    },
+    {
+      "id": 1788342975318,
+      "task_id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "commit_hash": "7a9c4b2",
+      "commit_message": "PLN-105: Add user authentication and dashboard widgets",
+      "author_name": "MADESH16",
+      "author_email": "madesh@planio.dev",
+      "commit_url": "https://github.com/MADESH16/Planio/commit/7a9c4b2",
+      "branch": "main",
+      "created_at": "2026-09-02T09:56:15.318Z"
     }
   ],
   "repositories": [
