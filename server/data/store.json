@@ -1,0 +1,260 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Darlene Robertson",
+      "email": "darlene@planio.dev",
+      "password_hash": "$2b$10$y8CSMqFK6XDDZnOOBhEeRe3Cfok2DPZsr8C9HUATta50wfvnCJls.",
+      "avatar_initials": "DR",
+      "color": "#3b82f6",
+      "role": "UI/UX Designer",
+      "created_at": "2026-09-02T09:39:33.852Z"
+    },
+    {
+      "id": 2,
+      "name": "Savannah Nguyen",
+      "email": "savannah@planio.dev",
+      "password_hash": "$2b$10$BDhI3Brxit5zGNKN/qIzxeY2FAG2sWRBMCNlJeNRGhotc4Q.MwG3a",
+      "avatar_initials": "SN",
+      "color": "#10b981",
+      "role": "Frontend Developer",
+      "created_at": "2026-09-02T09:39:33.916Z"
+    },
+    {
+      "id": 3,
+      "name": "Leslie Alexander",
+      "email": "leslie@planio.dev",
+      "password_hash": "$2b$10$llpEi8WBaMLYkbMeU0.aKeEoZfr9LnIRdLHDDOuCHL..MiSXYS1Ui",
+      "avatar_initials": "LA",
+      "color": "#f59e0b",
+      "role": "Product Manager",
+      "created_at": "2026-09-02T09:39:33.980Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "user_id": null,
+      "title": "Test",
+      "description": "Test",
+      "status": "todo",
+      "priority": "medium",
+      "progress": 0,
+      "estimated_time": "",
+      "date_label": "09/02, 03:15 PM",
+      "integration": "github",
+      "image_url": null,
+      "creator_id": "u1",
+      "assignees": [
+        "u1"
+      ],
+      "github_repo": "MADESH16/Planio",
+      "github_issue_number": 487,
+      "github_issue_url": "https://github.com/MADESH16/Planio/issues/487",
+      "github_labels": [
+        {
+          "name": "enhancement",
+          "color": "#3b82f6"
+        }
+      ],
+      "created_at": "2026-09-02T09:46:04.774Z",
+      "updated_at": "2026-09-02T09:46:50.271Z",
+      "estimatedTime": "",
+      "image": null,
+      "date": "09/02, 03:15 PM",
+      "createOnGitHub": false,
+      "githubRepo": "MADESH16/Planio",
+      "githubLabels": [
+        {
+          "name": "enhancement",
+          "color": "#3b82f6"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "ticket_key": "PLN-101",
+      "user_id": 1,
+      "title": "Implement User Authentication & JWT Flow",
+      "description": "Setup Node.js Express backend with PostgreSQL user login, registration, and password hashing.",
+      "status": "inprogress",
+      "priority": "high",
+      "progress": 65,
+      "estimated_time": "8h",
+      "date_label": "03/02 10:30 AM",
+      "integration": "github",
+      "image_url": null,
+      "creator_id": "1",
+      "assignees": [
+        1,
+        2
+      ],
+      "github_repo": "octocat/Hello-World",
+      "github_issue_number": 101,
+      "github_issue_url": "https://github.com/octocat/Hello-World/issues/101",
+      "github_labels": [
+        {
+          "name": "backend",
+          "color": "#3b82f6"
+        },
+        {
+          "name": "auth",
+          "color": "#8b5cf6"
+        }
+      ],
+      "created_at": "2026-09-02T09:39:33.980Z",
+      "updated_at": "2026-09-02T09:39:33.980Z"
+    },
+    {
+      "id": 2,
+      "ticket_key": "PLN-102",
+      "user_id": 2,
+      "title": "GitHub Webhook & Commit Linking Pipeline",
+      "description": "Automatically link git commit hashes and messages to tickets when pushed to repository.",
+      "status": "done",
+      "priority": "high",
+      "progress": 100,
+      "estimated_time": "12h",
+      "date_label": "03/02 11:15 AM",
+      "integration": "github",
+      "image_url": null,
+      "creator_id": "2",
+      "assignees": [
+        2
+      ],
+      "github_repo": "octocat/Hello-World",
+      "github_issue_number": 102,
+      "github_issue_url": "https://github.com/octocat/Hello-World/issues/102",
+      "github_labels": [
+        {
+          "name": "git",
+          "color": "#10b981"
+        },
+        {
+          "name": "feature",
+          "color": "#f59e0b"
+        }
+      ],
+      "created_at": "2026-09-02T09:39:33.980Z",
+      "updated_at": "2026-09-02T09:41:01.419Z"
+    },
+    {
+      "id": 3,
+      "ticket_key": "PLN-103",
+      "user_id": 1,
+      "title": "Design System & Dark Mode Polish",
+      "description": "Refine Tailwind and Vanilla CSS variables, glassmorphic header, and responsive card layouts.",
+      "status": "done",
+      "priority": "medium",
+      "progress": 100,
+      "estimated_time": "4h",
+      "date_label": "03/01 04:20 PM",
+      "integration": "github",
+      "image_url": null,
+      "creator_id": "1",
+      "assignees": [
+        1,
+        3
+      ],
+      "github_repo": "octocat/Hello-World",
+      "github_issue_number": 103,
+      "github_issue_url": "https://github.com/octocat/Hello-World/issues/103",
+      "github_labels": [
+        {
+          "name": "ui",
+          "color": "#ec4899"
+        }
+      ],
+      "created_at": "2026-09-02T09:39:33.980Z",
+      "updated_at": "2026-09-02T09:39:33.980Z"
+    }
+  ],
+  "commits": [
+    {
+      "id": 1,
+      "task_id": 1,
+      "ticket_key": "PLN-101",
+      "commit_hash": "9f8b2a1",
+      "commit_message": "PLN-101: Setup express auth router and bcrypt password hashing",
+      "author_name": "Darlene Robertson",
+      "author_email": "darlene@planio.dev",
+      "commit_url": "https://github.com/octocat/Hello-World/commit/9f8b2a1",
+      "branch": "main",
+      "created_at": "2026-09-02T09:39:33.980Z"
+    },
+    {
+      "id": 2,
+      "task_id": 1,
+      "ticket_key": "PLN-101",
+      "commit_hash": "3d7e5c8",
+      "commit_message": "PLN-101: Add JWT authentication middleware & me endpoint",
+      "author_name": "Savannah Nguyen",
+      "author_email": "savannah@planio.dev",
+      "commit_url": "https://github.com/octocat/Hello-World/commit/3d7e5c8",
+      "branch": "feature/auth",
+      "created_at": "2026-09-02T09:39:33.980Z"
+    },
+    {
+      "id": 1788342061404,
+      "task_id": 1,
+      "ticket_key": "PLN-101",
+      "commit_hash": "a7b3c99",
+      "commit_message": "PLN-101: Fix JWT token expiration validation",
+      "author_name": "Alex Morgan",
+      "author_email": "alex@planio.dev",
+      "commit_url": null,
+      "branch": "main",
+      "created_at": "2026-09-02T09:41:01.404Z"
+    },
+    {
+      "id": 1788342061634,
+      "task_id": 2,
+      "ticket_key": "PLN-102",
+      "commit_hash": "5e4d3c2",
+      "commit_message": "PLN-102: Implement webhook payload receiver and auto-linker",
+      "author_name": "Savannah Nguyen",
+      "author_email": "savannah@planio.dev",
+      "commit_url": null,
+      "branch": "feature/auth",
+      "created_at": "2026-09-02T09:41:01.418Z"
+    },
+    {
+      "id": 1788342062046,
+      "task_id": 2,
+      "ticket_key": "PLN-102",
+      "commit_hash": "88a99b1",
+      "commit_message": "Fixes PLN-102: Complete webhook testing and ticket status transition",
+      "author_name": "Savannah Nguyen",
+      "author_email": "savannah@planio.dev",
+      "commit_url": null,
+      "branch": "feature/auth",
+      "created_at": "2026-09-02T09:41:01.419Z"
+    },
+    {
+      "id": 1788342538502,
+      "task_id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "commit_hash": "e3f1b8a",
+      "commit_message": "PLN-105: Initial commit for Test ticket feature",
+      "author_name": "MADESH16",
+      "author_email": "madesh@planio.dev",
+      "commit_url": "https://github.com/MADESH16/Planio/commit/e3f1b8a",
+      "branch": "main",
+      "created_at": "2026-09-02T09:48:58.502Z"
+    }
+  ],
+  "repositories": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "owner": "octocat",
+      "repo_name": "Hello-World",
+      "full_name": "octocat/Hello-World",
+      "github_token": "",
+      "default_branch": "main",
+      "created_at": "2026-09-02T09:39:33.980Z"
+    }
+  ],
+  "ticket_counter": 105
+}

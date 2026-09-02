@@ -1,0 +1,315 @@
+.task-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--text-muted);
+}
+
+.task-card:active {
+  cursor: grabbing;
+}
+
+.task-card.dragging {
+  opacity: 0.15 !important;
+  border: 1.5px dashed var(--accent-color) !important;
+  box-shadow: none !important;
+  background-color: var(--border-light) !important;
+}
+
+.task-card-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.task-card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-card-creator-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.task-card-title-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.task-card-date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.task-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.task-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-light);
+  padding: 12px 18px 16px 18px;
+  margin-top: auto;
+}
+
+.task-card-integration {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.task-card-integration-text {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Card Assignees */
+.task-card-assignees {
+  display: flex;
+  align-items: center;
+}
+
+.task-card-assignee {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 1.5px solid var(--bg-card);
+  margin-right: -6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.task-card-assignee.counter {
+  background-color: var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.6rem;
+  font-weight: 700;
+  cursor: default;
+}
+
+/* Priority Badges */
+.priority-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+  margin-left: auto;
+}
+
+.priority-low {
+  background-color: var(--bg-done-light);
+  color: var(--color-done);
+}
+
+.priority-medium {
+  background-color: #ffedd5;
+  color: #c2410c;
+}
+
+.priority-high {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.dark .priority-medium {
+  background-color: #451a03;
+  color: #fb923c;
+}
+
+.dark .priority-high {
+  background-color: #450a0a;
+  color: #f87171;
+}
+
+/* Progress Section in Card */
+.task-card-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.task-card-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.task-card-progress-bar-bg {
+  width: 100%;
+  height: 5px;
+  background-color: var(--border-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.task-card-progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-normal);
+}
+
+/* Card Est Time */
+.task-card-est-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background-color: var(--bg-app);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+/* GitHub Issue Tag & Labels Bar */
+.task-card-gh-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.task-card-gh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  background-color: var(--accent-light);
+  border: 1px solid var(--border-color);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.task-card-gh-badge:hover {
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+
+.task-card-gh-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+  line-height: 1.2;
+}
+
+.task-card-repo-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: var(--bg-app);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.task-card-repo-tag:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.task-card-key-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.task-card-ticket-key {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-color);
+  background-color: var(--accent-light);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.4px;
+}
+
+.task-card-commit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #10b981;
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.dark .task-card-commit-badge {
+  background-color: #064e3b;
+  border-color: #047857;
+  color: #34d399;
+}
+
+

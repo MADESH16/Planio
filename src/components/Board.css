@@ -1,0 +1,19 @@
+.board-container {
+  display: flex;
+  gap: 24px;
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+  align-items: flex-start;
+  padding-bottom: 24px;
+}
+
+/* Scrollbar styles for board container */
+.board-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.board-container::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: var(--radius-full);
+}

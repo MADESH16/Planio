@@ -1,0 +1,229 @@
+.list-view-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+  padding-right: 8px;
+  padding-bottom: 24px;
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.list-group-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.list-group-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.list-group-count {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-item-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.list-item-card:hover {
+  transform: translateX(4px);
+  border-color: var(--text-muted);
+  box-shadow: var(--shadow-md);
+}
+
+.list-item-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.list-item-image {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.list-item-text-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.list-item-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.list-item-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.list-item-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.list-item-date {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 130px;
+}
+
+.list-item-integration {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.list-item-assignees {
+  display: flex;
+  align-items: center;
+}
+
+.list-item-assignee-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--bg-card);
+  margin-right: -6px;
+  box-shadow: var(--shadow-sm);
+}
+
+.list-item-btn-edit {
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.list-item-btn-edit:hover {
+  background-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Priority Badges inside List Item */
+.list-priority-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.list-priority-low {
+  background-color: var(--bg-done-light);
+  color: var(--color-done);
+}
+
+.list-priority-medium {
+  background-color: #ffedd5;
+  color: #c2410c;
+}
+
+.list-priority-high {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.dark .list-priority-medium {
+  background-color: #451a03;
+  color: #fb923c;
+}
+
+.dark .list-priority-high {
+  background-color: #450a0a;
+  color: #f87171;
+}
+
+/* Progress bar inside List View cards */
+.list-item-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 110px;
+}
+
+.list-item-progress-bar-bg {
+  flex: 1;
+  height: 5px;
+  background-color: var(--border-color);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.list-item-progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: var(--radius-full);
+}
+
+.list-item-progress-val {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 28px;
+  text-align: right;
+}
+
