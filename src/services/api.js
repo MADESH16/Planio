@@ -116,6 +116,17 @@ export const api = {
     return data.commit;
   },
 
+  syncCommits: async (repoFullName = 'MADESH16/Planio') => {
+    const res = await fetch(`${API_BASE}/commits/sync`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ repoFullName }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Failed to sync commits');
+    return data;
+  },
+
   getTaskCommits: async (taskId) => {
     const res = await fetch(`${API_BASE}/commits/task/${taskId}`);
     const data = await res.json();

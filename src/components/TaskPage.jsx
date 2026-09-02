@@ -7,6 +7,7 @@ import {
   ExternalLinkIcon,
   CheckIcon,
   GitForkIcon,
+  SyncIcon,
 } from './Icons';
 import './TaskPage.css';
 
@@ -21,10 +22,13 @@ const AVAILABLE_GITHUB_LABELS = [
 
 const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => {
   const {
+    tasks,
     addTask,
     updateTask,
     deleteTask,
     addCommitToTask,
+    syncCommits,
+    isSyncingCommits,
     users,
     linkedRepo,
     setIsGitHubModalOpen,
@@ -60,7 +64,8 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
 
   const fileInputRef = useRef(null);
   const currentTicketKey = taskToEdit?.ticketKey || 'PLN-105';
-  const commits = taskToEdit?.commits || [];
+  const liveTask = (tasks && tasks.find((t) => t.id === taskToEdit?.id || t.ticketKey === currentTicketKey)) || taskToEdit;
+  const commits = liveTask?.commits || [];
 
   useEffect(() => {
     if (taskToEdit) {
@@ -416,7 +421,17 @@ const TaskPage = ({ taskToEdit = null, defaultColumnId = 'todo', onCancel }) => 
                     Linked Git Commits for {currentTicketKey} ({commits.length})
                   </h4>
                 </div>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <button
+                    type="button"
+                    className="btn-sync-git-cmd"
+                    onClick={() => syncCommits(false)}
+                    disabled={isSyncingCommits}
+                    title="Sync commits from Git repository"
+                  >
+                    <SyncIcon size={13} className={isSyncingCommits ? 'spin' : ''} />
+                    <span>{isSyncingCommits ? 'Syncing...' : 'Sync Commits'}</span>
+                  </button>
                   <button
                     type="button"
                     className="btn-copy-git-cmd"

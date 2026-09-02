@@ -1,4 +1,5 @@
 import { pool, isPgConnected, localStore, saveStore } from '../config/db.js';
+import { runCommitSync } from './commitController.js';
 
 /**
  * Helper to generate next unique Ticket Key (e.g. PLN-104)
@@ -26,6 +27,11 @@ const getNextTicketKey = async (prefix = 'PLN') => {
  */
 export const getTasks = async (req, res) => {
   try {
+    try {
+      await runCommitSync();
+    } catch (syncErr) {
+      // Non-blocking sync
+    }
     if (isPgConnected) {
       const tasksResult = await pool.query('SELECT * FROM tasks ORDER BY id DESC');
       const commitsResult = await pool.query('SELECT * FROM commits ORDER BY id DESC');

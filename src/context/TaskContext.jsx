@@ -518,6 +518,42 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+  const [isSyncingCommits, setIsSyncingCommits] = useState(false);
+
+  /**
+   * Scan and sync commits from Git repository / GitHub
+   */
+  const syncCommits = async (silent = false) => {
+    setIsSyncingCommits(true);
+    try {
+      const repoName = linkedRepo ? linkedRepo.fullName : 'MADESH16/Planio';
+      const result = await api.syncCommits(repoName);
+
+      // Refresh all tasks with updated commits
+      const remoteTasks = await api.getTasks();
+      if (remoteTasks && remoteTasks.length > 0) {
+        setTasks(remoteTasks);
+      }
+
+      if (!silent) {
+        if (result.newCount > 0) {
+          showToast(`Synced ${result.newCount} new commit(s) from repository!`, 'success');
+        } else {
+          showToast(`Commits are up to date (${result.totalCommits || 0} commits total).`, 'info');
+        }
+      }
+      return { success: true, ...result };
+    } catch (err) {
+      console.error('Failed to sync commits', err);
+      if (!silent) {
+        showToast('Failed to sync commits from repository.', 'error');
+      }
+      return { success: false, error: err.message };
+    } finally {
+      setIsSyncingCommits(false);
+    }
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -538,6 +574,8 @@ export const TaskProvider = ({ children }) => {
         deleteTask,
         moveTask,
         addCommitToTask,
+        syncCommits,
+        isSyncingCommits,
         selectedTaskForDetails,
         openTaskDetails,
         closeTaskDetails,

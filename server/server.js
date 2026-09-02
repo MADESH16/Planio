@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes.js';
 import taskRoutes from './routes/taskRoutes.js';
 import commitRoutes from './routes/commitRoutes.js';
 import webhookRoutes from './routes/webhookRoutes.js';
+import { runCommitSync } from './controllers/commitController.js';
 
 dotenv.config();
 
@@ -61,6 +62,14 @@ app.use((err, req, res, next) => {
 // Start Server & Initialize Database
 const start = async () => {
   await initDB();
+
+  // Initial Git & GitHub commits scan
+  try {
+    await runCommitSync('MADESH16/Planio');
+  } catch (err) {
+    console.warn('Initial commit sync note:', err.message);
+  }
+
   const server = app.listen(PORT, () => {
     console.log(`=============================================`);
     console.log(`🚀 Planio Backend running on http://localhost:${PORT}`);
@@ -82,9 +91,3 @@ const start = async () => {
 };
 
 start();
-
-
-
-
-
-

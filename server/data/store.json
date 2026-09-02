@@ -177,6 +177,54 @@
   ],
   "commits": [
     {
+      "id": 1788344531785,
+      "task_id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "commit_hash": "b9ea621",
+      "commit_message": "PLN-105: Add user authentication and dashboard widgets",
+      "author_name": "Madesh",
+      "author_email": "madesh.seenivasagan@data-aces.com",
+      "commit_url": "https://github.com/MADESH16/Planio/commit/b9ea621",
+      "branch": "main",
+      "created_at": "2026-09-02T15:24:15+05:30"
+    },
+    {
+      "id": 1788344531114,
+      "task_id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "commit_hash": "d721fa9",
+      "commit_message": "PLN-105: Modified the commit message add feature",
+      "author_name": "Madesh",
+      "author_email": "madesh.seenivasagan@data-aces.com",
+      "commit_url": "https://github.com/MADESH16/Planio/commit/d721fa9",
+      "branch": "main",
+      "created_at": "2026-09-02T15:34:56+05:30"
+    },
+    {
+      "id": 1788344531411,
+      "task_id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "commit_hash": "c213883",
+      "commit_message": "PLN-105: Testing feature",
+      "author_name": "Madesh",
+      "author_email": "madesh.seenivasagan@data-aces.com",
+      "commit_url": "https://github.com/MADESH16/Planio/commit/c213883",
+      "branch": "main",
+      "created_at": "2026-09-02T15:36:09+05:30"
+    },
+    {
+      "id": 1788344531470,
+      "task_id": 1788342364774,
+      "ticket_key": "PLN-105",
+      "commit_hash": "db73960",
+      "commit_message": "PLN-105: Add user",
+      "author_name": "Madesh",
+      "author_email": "madesh.seenivasagan@data-aces.com",
+      "commit_url": "https://github.com/MADESH16/Planio/commit/db73960",
+      "branch": "main",
+      "created_at": "2026-09-02T15:39:41+05:30"
+    },
+    {
       "id": 1,
       "task_id": 1,
       "ticket_key": "PLN-101",

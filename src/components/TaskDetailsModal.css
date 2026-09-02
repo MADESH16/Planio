@@ -299,6 +299,31 @@
   font-weight: 700;
 }
 
+.btn-sync-git-cmd {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  background-color: var(--accent-light);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-sync-git-cmd:hover:not(:disabled) {
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+
+.btn-sync-git-cmd:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .btn-add-commit-toggle {
   display: flex;
   align-items: center;

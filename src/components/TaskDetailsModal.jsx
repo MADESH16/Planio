@@ -9,11 +9,12 @@ import {
   GithubIcon,
   CheckIcon,
   EditIcon,
+  SyncIcon,
 } from './Icons';
 import './TaskDetailsModal.css';
 
 const TaskDetailsModal = ({ task, onClose, onEditTask }) => {
-  const { addCommitToTask, showToast, users } = useTasks();
+  const { tasks, addCommitToTask, syncCommits, isSyncingCommits, showToast, users } = useTasks();
   const { user } = useAuth();
 
   const [commitHash, setCommitHash] = useState('');
@@ -24,8 +25,9 @@ const TaskDetailsModal = ({ task, onClose, onEditTask }) => {
 
   if (!task) return null;
 
-  const commits = task.commits || [];
-  const creator = users.find((u) => String(u.id) === String(task.creatorId)) || users[0];
+  const liveTask = (tasks && tasks.find((t) => t.id === task?.id || t.ticketKey === task?.ticketKey)) || task;
+  const commits = liveTask.commits || [];
+  const creator = users.find((u) => String(u.id) === String(liveTask.creatorId)) || users[0];
 
   const handleCopyKey = () => {
     if (task.ticketKey) {
@@ -223,14 +225,26 @@ const TaskDetailsModal = ({ task, onClose, onEditTask }) => {
                   Linked Git Commits ({commits.length})
                 </h4>
               </div>
-              <button
-                type="button"
-                className="btn-add-commit-toggle"
-                onClick={() => setIsAddingCommit(!isAddingCommit)}
-              >
-                <PlusIcon size={14} />
-                <span>{isAddingCommit ? 'Cancel' : 'Link Commit'}</span>
-              </button>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <button
+                  type="button"
+                  className="btn-sync-git-cmd"
+                  onClick={() => syncCommits(false)}
+                  disabled={isSyncingCommits}
+                  title="Sync commits from Git repository"
+                >
+                  <SyncIcon size={13} className={isSyncingCommits ? 'spin' : ''} />
+                  <span>{isSyncingCommits ? 'Syncing...' : 'Sync Commits'}</span>
+                </button>
+                <button
+                  type="button"
+                  className="btn-add-commit-toggle"
+                  onClick={() => setIsAddingCommit(!isAddingCommit)}
+                >
+                  <PlusIcon size={14} />
+                  <span>{isAddingCommit ? 'Cancel' : 'Link Commit'}</span>
+                </button>
+              </div>
             </div>
 
             {/* Add Commit Form */}
